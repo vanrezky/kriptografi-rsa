@@ -7,151 +7,153 @@ class User extends MY_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('admin_model', 'admin');
+		$this->load->model('user_model', 'user');
 	}
-
 
 	public function index()
 	{
-		is_logged_in();
-		
-		$cek = '';
-		// ------------------------------ form validasi -------------------
-		$this->form_validation->set_rules('role_id', 'Role', 'trim|required', [
-			'required' => 'Role tidak Boleh Kosong!'
-		]);
 
-		$this->form_validation->set_rules('name', 'Name', 'trim|required', [
+		$data = [
+			'title' => 'User',
+			'data' => $this->user->getData()
+		];
+
+		$this->render('v_user_index', $data);
+	}
+
+
+	public function data($id = false)
+	{
+		// kondisi jika id tidak sama dengan false
+		if ($id !== false) $id = decode($id);
+
+		// start form validasi
+		$this->form_validation->set_rules('nama', 'Nama', 'trim|required', [
 			'required' => 'Nama tidak Boleh Kosong!'
 		]);
 
-		$this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email|is_unique[tb_user.email]', [
-			'is_unique' => 'Email sudah terdaftar!',
-			'required' => 'Email tidak boleh kosong!',
-			'valid_email' => 'Email tidak valid!'
-		]);
+		// kondisi, jika id false cek username
+		if ($id === false) {
+			$this->form_validation->set_rules('username', 'username', 'trim|required|is_unique[user.username]', [
+				'is_unique' => 'Username sudah terdaftar!',
+				'required' => 'Username tidak boleh kosong!',
+			]);
+		}
+		if (($id === false) or $this->input->post('pass1')) {
+			$this->form_validation->set_rules('pass1', 'Password', 'trim|required|min_length[3]|matches[pass2]', [
+				'required' => 'Password tidak boleh kosong!',
+				'min_length' => 'Password terlalu singkat!',
+				'matches' => 'Password tidak cocok!'
+			]);
+			$this->form_validation->set_rules('pass2', 'Password', 'trim|required', [
+				'required' => 'Retype Password tidak boleh kosong!',
+			]);
+		}
 
-		$this->form_validation->set_rules('password1', 'Password', 'trim|required|min_length[3]|matches[password2]', [
-			'required' => 'Password tidak boleh kosong!',
-			'min_length' => 'Password terlalu singkat!',
-			'matches' => 'Password tidak cocok!'
-		]);
-		$this->form_validation->set_rules('password2', 'Password', 'trim|required', [
-			'required' => 'Retype Password tidak boleh kosong!',
-		]);
+		// kondisi validasi
+		if ($this->form_validation->run() == false) { // jika validasi gagal
 
+			$error = validation_errors();
 
-		// --------- end Validasi -----------
+			$data = [
+				'title' => 'Data user',
+				'data' => $this->user->getData($id),
+				'error' => !empty($error) ? $error : ''
+			];
 
-		if ($this->form_validation->run() == false) { // jika validasi gagal maka kembali ke halaman user
+			$this->render('v_user_data', $data);
 
-			$data['title'] = 'User'; // title halaman
-			$data['allRole'] = $this->admin->get_all_role(); //ambil semua role
-			$data['allUser'] = $this->admin->get_all_user(); //ambil semua user
+			// jika validasi benar
+		} else {
 
-			$this->render('user/user_index', $data);
-		} else {   // jika validasi benar, maka akan input array ke database.
+			$data = [
+				'nama' 		=>  $this->input->post('nama', true),
+				'level' 	=>  $this->input->post('level', true),
+			];
 
-			if (!empty($_FILES['image']['name'])) {
-				$config['upload_path'] = './uploads/images/';
-				$config['allowed_types'] = 'jpg|png';
+			$cek = '';
+			if (!empty($_FILES['foto']['name'])) {
+				$config['upload_path'] = './public/uploads/img/';
+				$config['allowed_types'] = 'jpg|png|jpeg';
 				$config['encrypt_name'] = TRUE;
-
 				$this->upload->initialize($config);
 
-				if (!$this->upload->do_upload('image')) {
+				if (!$this->upload->do_upload('foto')) {
 					$error = $this->upload->display_errors();
 					$cek = $error;
 				} else {
-					$post_image = $this->upload->data();
-				}
 
-				if (!empty($cek)) {
-					$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">' . $cek . '</div>');
-					redirect('user');
-				} else {
-					$data = [
-						'name' => htmlspecialchars($this->input->post('name', true)),
-						'email' => htmlspecialchars($this->input->post('email', true)),
-						'image' => $post_image['file_name'],
-						'password' => password_hash($this->input->post('password1'), PASSWORD_DEFAULT),
-						'role_id' => htmlspecialchars($this->input->post('role_id', true)),
-						'is_active' => '1',
-						'date_created' => time()
-					];
-					$this->admin->save_new_user($data);
-					$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Selamat!, Akun anda berhasil didaftarkan. </div>');
-					redirect('user');
+					if ($id) {
+						$user = $this->user->getData($id);
+						$src = 'public/uploads/img/';
+						if ($user['foto'] != 'default.png') {
+							if (file_exists(FCPATH . $src . $user['foto'])) {
+								unlink($src . $user['foto']);
+							}
+						}
+					}
+
+					$post_image = $this->upload->data();
+					$data['foto'] = $post_image['file_name'];
 				}
 			} else {
-				$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Silahkan upload foto format png/jpg. </div>');
+				if ($id === false) {
+					$data['foto'] = 'default.png';
+				}
+			}
+
+			if (!empty($cek)) {
+				$this->session->set_flashdata('message', alert($cek, 'danger'));
 				redirect('user');
+			} else {
+				if ($id) {
+					$data['updated_at'] = current_timestamp();
+
+					if ($this->input->post('pass1')) {
+						$data['password'] = password_hash($this->input->post('pass1', true), PASSWORD_DEFAULT);
+					}
+				} else {
+					$data['username'] = $this->input->post('username', true);
+					$data['password'] = $this->input->post('pass1');
+					$data['created_at'] = current_timestamp();
+				}
+
+				$save = $this->user->saveData($id, $data);
+				if ($save) {
+					$this->session->set_flashdata('message', alert('Data berhasil disimpan!', 'success'));
+				} else {
+					$this->session->set_flashdata('message', alert('Data gagal disimpan!', 'danger'));
+				}
+				redirect('user', 'refresh');
 			}
 		}
 	}
 
-	public function profile($email = "")
+	public function hapus($id = false)
 	{
-		// dekripsi terlebih dahulu email
-		$email = decode($email);
-		$data = $this->admin->get_user_by_email($email);
-		$passlama = $this->input->post('passlama', true);
-		$cek = true;
 
-		$this->form_validation->set_rules('name', 'Name', 'trim|required', [
-			'required' => 'Nama tidak Boleh Kosong!'
-		]);
+		if ($id !== false) $id = decode($id);
 
-		// kondisi jika password lama tidak kosong
-		if (!empty($passlama)) {
+		if ($id) {
 
-			$this->form_validation->set_rules('passlama', 'Password Lama', 'trim|required', [
-				'required' => 'Password Lama tidak Boleh Kosong!'
-			]);
-			$this->form_validation->set_rules('passbaru1', 'Password Baru', 'trim|required|min_length[3]|matches[passbaru2]', [
-				'required' => 'Password Baru tidak boleh kosong!',
-				'min_length' => 'Password Baru terlalu singkat!',
-				'matches' => 'Password Baru tidak cocok!'
-			]);
-			$this->form_validation->set_rules('passbaru2', 'Konfirmasi Password Baru', 'trim|required', [
-				'required' => 'Konfirmasi Password Baru tidak boleh kosong!',
-			]);
-		}
+			$data = $this->user->getData($id);
+			$src = 'public/uploads/img/';
+			if ($data['foto'] != 'default.png') {
+				if (file_exists(FCPATH . $src . $data['foto'])) {
+					unlink($src . $data['foto']);
+				}
+			}
 
-		if ($this->form_validation->run() == false) { // jika validasi gagal maka kembali ke halaman user
+			$delete = $this->user->deleteData($id);
 
-			$D = [
-				'title' => 'Profile',
-				'data' => $data
-			];
-
-			$this->render('user/user_profile', $D);
+			if ($delete) {
+				$this->session->set_flashdata('message', alert('Data berhasil dihapus!', 'success'));
+			} else {
+				$this->session->set_flashdata('message', alert('Data gagal dihapus', 'danger'));
+			}
 		} else {
-			$insert = array();
-
-			$insert['name'] = $this->input->post('name', true);
-
-			if (!empty($passlama)) { // ==> kondisi jika password lama tidak kosong
-				if (password_verify($passlama, $data['password'])) {
-					$insert['password'] = $this->input->post('passbaru1');
-				} else {
-					$cek = false;
-					$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Password lama salah!</div>');
-				}
-			}
-
-			if ($cek === true) {
-
-				$update = $this->admin->update_user_by_email($email, $insert);
-
-				if ($update) {
-					$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data berhasil diperbarui!</div>');
-				} else {
-					$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Data gagal diperbarui!</div>');
-				}
-			}
-
-			redirect('user/profile/' . encode($email), 'refresh');
+			$this->session->set_flashdata('message', alert('Maaf, data tidak ditemukan!', 'danger'));
 		}
+		redirect('user', 'refresh');
 	}
 }

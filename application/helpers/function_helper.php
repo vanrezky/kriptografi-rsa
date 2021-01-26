@@ -1,4 +1,4 @@
-<?php
+<?php defined('BASEPATH') or exit('No direct script access allowed');
 function setCookies($name = '', $data = '')
 {
     deleteCookies($name);
@@ -72,4 +72,15 @@ function tahun_sekarang()
     }
 
     return $tahun_array;
+}
+
+function d($var)
+{
+    echo '<pre>' . var_export($var, true) . '</pre>';
+}
+
+function dd($var)
+{
+    echo '<pre>' . var_export($var, true) . '</pre>';
+    die;
 }

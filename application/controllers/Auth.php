@@ -12,33 +12,30 @@ class Auth extends MY_Controller
     // ------------------------------------ login page ---------------------
     public function index()
     {
-        //jika session sudah ada email
-        if ($this->session->has_userdata('email')) {
+        //jika session sudah ada username
+        if ($this->session->has_userdata('username')) redirect('dashboard');
 
-            redirect('dashboard');
-        }
-        // validasi email
-        $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email', [
-            'required' => 'Email tidak boleh kosong!',
-            'valid_email' => 'Email tidak valid!'
+        // =========== start validasi
+        $this->form_validation->set_rules('username', 'Username', 'trim|required', [
+            'required' => 'Username tidak boleh kosong!',
         ]);
-        // validasi password
         $this->form_validation->set_rules('password', 'Password', 'trim|required', [
             'required' => 'Password tidak boleh kosong!',
         ]);
+        // =========== end validasi
 
         if ($this->form_validation->run() == false) { // jika form validasi salah
 
-            $data['title'] = 'Login Page';
+            $data['title'] = 'Login';
 
             $this->load->view('v_auth_login', $data); // load view
 
         } else {
 
-            $dt['email']     = $this->input->post('email');
+            $dt['username']     = $this->input->post('username');
             $dt['password']  = $this->input->post('password');
 
-            $this->auth->getLoginData($dt);
+            $this->auth->getLoginData($dt); // cek login di model
         }
     }
 
@@ -56,10 +53,10 @@ class Auth extends MY_Controller
     // ------------------------------------- logout---------------------------------
     public function logout()
     {
-        $this->session->unset_userdata('email');
-        $this->session->unset_userdata('role_id');
+        $this->session->unset_userdata('username');
+        $this->session->unset_userdata('level');
 
-        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Anda berhasil keluar!</div>');
+        $this->session->set_flashdata('pesan_auth', '<div class="alert alert-success" role="alert">Anda berhasil keluar!</div>');
         redirect('auth');
     }
 

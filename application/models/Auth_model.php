@@ -16,66 +16,57 @@ class Auth_model extends CI_Model
         return $info->row_array();
     }
 
-
     public function getLoginData($data)
 
     {
+        $username = $data['username']; // dari form input username
+        $password = $data['password']; //dari form input password
 
-        $email = $this->input->post('email'); // dari form input email
-        $password = $this->input->post('password'); //dari form input password
-
-        $user = $this->db->select('tb_user.*, TBU.role')->join('tb_user_role TBU', 'tb_user.role_id=TBU.id', 'INNER')->get_where('tb_user', ['email' => $email])->row_array(); //ambil data berdasarkan email
+        $user = $this->db->get_where('user', ['username' => $username])->row_array();
         //jika user ada
-        if ($user) {
+        if (!empty($user)) {
             //jika user aktif
-            if ($user['is_active'] == 1) {
-                // cek password
-                if (password_verify($password, $user['password'])) {
-                    $data = [
-                        'email' => (encode($user['email'])),
-                        'role_id' => (encode($user['role_id'])),
-                        'status' => ($user['role'])
-                    ];
-                    $this->session->set_userdata($data);
-                    redirect('dashboard');
-                } else {
-                    $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Password Salah!</div>');
-                    redirect('auth');
-                }
+            // cek password
+            if (password_verify($password, $user['password'])) {
+                $data = [
+                    'username' => (encode($user['username'])),
+                    'level' => strtoupper($user['level'])
+                ];
+                $this->session->set_userdata($data);
+                redirect('dashboard');
             } else {
-                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Email ini belum diaktivasi! Silahkan cek email anda </div>');
+                $this->session->set_flashdata('pesan_auth', '<div class="alert alert-danger" role="alert">Password Salah!</div>');
                 redirect('auth');
             }
         } else {
-            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Email belum terdaftar! </div>');
+            $this->session->set_flashdata('pesan_auth', '<div class="alert alert-danger" role="alert">Data tidak ditemukan di server kami! </div>');
             redirect('auth');
         }
     }
 
-    public function get_dashboard_info()
+    public function getChartData($bulan)
+    {
+        // $this->db->group_by('MONTH(created_at)');
+        $this->db->where("");
+        $this->db->order_by('created_at', 'ASC');
+        return $this->db->count_all_results('riwayat_pasien');
+    }
+
+    public function getSekilas()
     {
         $this->db->select('(
-					SELECT COUNT(BRG.`id`)
-                    FROM tb_barang BRG
-				)barang, (
-					SELECT COUNT(ALT.`id`)
-                    FROM tb_alat ALT
-				)alat,(
-					SELECT COUNT(TRS.`id`)
-                    FROM tb_transportasi TRS
-				)transportasi,(
-					SELECT COUNT(SUP.`id`)
-                    FROM tb_suplier SUP
-				)suplier,(
-					SELECT COUNT(TRX.`no_trans`)
-                    FROM tb_transaksi TRX
-				)transaksi,(
-					SELECT SUM(TRX3.`total`)
-                    FROM tb_transaksi TRX3
-				)trans_total,(
-					SELECT COUNT(PRO.`id`)
-                    FROM tb_proyek PRO
-				)proyek');
+					SELECT COUNT(riwayat_pasien.`id`)
+                    FROM riwayat_pasien
+				)riwayat, (
+					SELECT COUNT(pasien.`id`)
+                    FROM pasien
+				)pasien,(
+					SELECT COUNT(dokter.`id`)
+                    FROM dokter
+				)dokter,(
+					SELECT COUNT(perawat_bidan.`id`)
+                    FROM perawat_bidan
+				)perawat_bidan');
         return $this->db->get()->row_array();
     }
 }

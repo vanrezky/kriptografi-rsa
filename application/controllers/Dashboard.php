@@ -6,16 +6,34 @@ class Dashboard extends MY_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('auth_model', 'auth');
 		is_logged_in();
+		$this->load->model('auth_model', 'auth');
 	}
 	public function index()
 	{
+		// $chart_array = [];
+		// $bulan_ini = 1;
+		// for ($i = 0; $i < 6; $i++) {
+		// 	$nama_bulan[] = date('F Y', strtotime("-$i month"));
+		// 	$chart_array[] = $this->auth->getChartData($i);
+		// 	// echo date(', F Y', strtotime("-$i month"));
+		// }
+		// dd($chart_array);
+		// $bulan_array = [];
+		// foreach ($this->auth->getBulan() as $key => $value) {
+		// }
+		$data = [
+			'title' => 'Dashboard',
+			'sekilas' => $this->auth->getSekilas(),
+			// 'bulan' => $bulan_array,
+		];
 
 
-		$data['title'] = 'Dashboard';
-		$data['data'] = $this->auth->get_dashboard_info();
+		$this->render('v_dashboard_index', $data);
 
-		$this->render('index', $data);
+		// $data['title'] = 'Dashboard';
+		// $data['data'] = $this->auth->get_dashboard_info();
+
+		// $this->render('index', $data);
 	}
 }

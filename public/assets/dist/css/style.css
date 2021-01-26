@@ -1,0 +1,10 @@
+.profil {
+	width: 100px;
+}
+.profil-data {
+	width: 200px;
+}
+
+.table > tbody > tr > * {
+	vertical-align: middle;
+}
