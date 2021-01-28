@@ -21,8 +21,8 @@
                                         <?php
                                         echo "<option value=''>Pilih Pasien</option>";
                                         foreach ($pasien as $key => $value) {
-                                            $s = '';
-                                            echo "<option value='" . encode($value['id']) . "'>" . ucwords($value['nama_pasien']) . " - $value[kode_pasien]</option>";
+                                            $s = isset($data['id_pasien']) ? ($data['id_pasien'] == $value['id'] ? 'selected' : '') : '';
+                                            echo "<option $s value='" . encode($value['id']) . "'>" . ucwords($value['nama_pasien']) . " - $value[kode_pasien]</option>";
                                         }
                                         ?>
                                     </select>
@@ -64,11 +64,11 @@
                                         <label for="kat_penyakit">Kategori Penyakit</label>
                                         <select class="custom-select" name="kat_penyakit" id="kat_penyakit">
                                             <?php
-                                            $data_kat_penyakit = isset($data['kat_penyakit']) ? strtolower($data['kat_penyakit']) : '';
                                             echo "<option value=''>Pilih</option>";
                                             foreach ($kat_penyakit as $key => $value) {
-                                                $s = $value['val'] == $data_kat_penyakit ? 'selected' : '';
-                                                echo "<option value='$value[val]' $s>" . ucfirst($value['label']) . "</option>";
+                                                $t = isset($data['kat_penyakit']) ? ($data['kat_penyakit'] == $value['val'] ? 'selected' : '') : '';
+                                                // $s = $value['val'] == $data_kat_penyakit ? 'selected' : '';
+                                                echo "<option value='$value[val]' $t>" . ucfirst($value['label']) . "</option>";
                                             }; ?>
                                         </select>
                                     </div>

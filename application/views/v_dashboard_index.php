@@ -12,7 +12,7 @@
 
                 </div>
             </div>
-            <div class="col-lg-12">
+            <!-- <div class="col-lg-12">
                 <div class="card card-outline">
                     <div class="card-header">
                         <h6 class="card-title">Statistik kunjungan pasien</h6>
@@ -25,13 +25,13 @@
                     </div>
 
                 </div>
-            </div>
+            </div> -->
 
         </div>
     </div>
 </div>
-<script src="<?= base_url("public/assets/plugins/chart.js/Chart.min.js"); ?>"></script>
-<script>
+<!-- <script src="<?= base_url("public/assets/plugins/chart.js/Chart.min.js"); ?>"></script> -->
+<!-- <script>
     var areaChartData = {
         labels: ['January', 'February', 'March', 'April', 'May', 'June'],
         datasets: [{
@@ -76,4 +76,4 @@
         data: barChartData,
         options: barChartOptions
     })
-</script>
+</script> -->

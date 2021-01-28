@@ -39,31 +39,32 @@
                         <p>Data Pasien</p>
                     </a>
                 </li>
-
+                <?php if ($this->session->userdata('level') == 'PEMILIK') {; ?>
+                    <li class="nav-item">
+                        <a href="<?= base_url('dokter'); ?>" class="nav-link">
+                            <i class="nav-icon fas fa-stethoscope"></i>
+                            <p>Data Dokter</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="<?= base_url('perawat-bidan'); ?>" class="nav-link">
+                            <i class="nav-icon fas fa-user-nurse"></i>
+                            <p>Data Perawat & Bidan</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="<?= base_url('user'); ?>" class="nav-link">
+                            <i class="nav-icon fas fa-users"></i>
+                            <p>Data Users</p>
+                        </a>
+                    </li>
+                <?php }; ?>
                 <li class="nav-item">
-                    <a href="<?= base_url('dokter'); ?>" class="nav-link">
-                        <i class="nav-icon fas fa-stethoscope"></i>
-                        <p>Data Dokter</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="<?= base_url('perawat-bidan'); ?>" class="nav-link">
-                        <i class="nav-icon fas fa-user-nurse"></i>
-                        <p>Data Perawat & Bidan</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="<?= base_url('user'); ?>" class="nav-link">
-                        <i class="nav-icon fas fa-users"></i>
-                        <p>Data Users</p>
-                    </a>
-                </li>
-                <!-- <li class="nav-item">
-                    <a href="<?= base_url('rsa'); ?>" class="nav-link">
+                    <a href="<?= base_url('laporan'); ?>" class="nav-link">
                         <i class="nav-icon fas fa-lock"></i>
-                        <p>Implementasi RSA</p>
+                        <p>Laporan</p>
                     </a>
-                </li> -->
+                </li>
                 <li class="nav-item">
                     <a href="<?= base_url('auth/logout'); ?>" class="nav-link">
                         <i class="nav-icon fas fa-power-off"></i>

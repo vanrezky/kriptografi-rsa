@@ -26,6 +26,23 @@ class Riwayat_model extends CI_Model
         return [];
     }
 
+    // ambil data
+    public function getDataLaporan($awal = "", $akhir = "")
+    {
+        if (!empty($awal) && !empty($akhir)) {
+            $table = $this->table;
+            $this->db->select("$table.*, pasien.kode_pasien, pasien.nama_pasien, pasien.nik, pasien.alamat, pasien.no_hp, dokter.nama_dokter, perawat_bidan.nama");
+            $this->db->join('pasien', "pasien.id=$table.id_pasien", 'LEFT');
+            $this->db->join('dokter', "dokter.id=$table.id_dokter", 'LEFT');
+            $this->db->join('perawat_bidan', "perawat_bidan.id=$table.id_pb", 'LEFT');
+            $this->db->where('riwayat_pasien.tgl_berobat BETWEEN "' . date('Y-m-d', strtotime($awal)) . '" and "' . date('Y-m-d', strtotime($akhir)) . '"');
+            $this->db->order_by($this->primary_key, 'DESC');
+            return $this->db->get($table)->result_array();
+        }
+
+        return [];
+    }
+
     //simpan atau update data 
     public function saveData($id = false, $data = [])
     {

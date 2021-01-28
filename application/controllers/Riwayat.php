@@ -20,9 +20,6 @@ class Riwayat extends MY_Controller
     public function index()
     {    //panggil key rsa
 
-        $data_array = [];
-        $getData = $this->riwayat->getData();
-
         $data = [
             'title' => 'Riwayat Pasien',
             'data' => $this->riwayat->getData(),

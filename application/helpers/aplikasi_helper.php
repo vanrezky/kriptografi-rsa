@@ -134,7 +134,7 @@ function ifUang($nominal = "")
 
 function getLevel()
 {
-    return ['pemilik', 'administrator', 'perawat'];
+    return ['pemilik', 'admin-klinik'];
 }
 
 function alert($pesan = '', $class = 'success')

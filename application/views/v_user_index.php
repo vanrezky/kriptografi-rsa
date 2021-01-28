@@ -7,7 +7,6 @@
                     <div class="card-header">
                         <div class="float-left">
                             <a href="<?= base_url('user/data'); ?>" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Tambah data</a>
-                            <a href="<?= base_url('user/data'); ?>" class="btn btn-warning btn-sm"><i class="fas fa-file-alt"></i> Print</a>
                         </div>
                     </div>
                     <div class="card-body">
