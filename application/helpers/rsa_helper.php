@@ -9,7 +9,6 @@ function rsa_key()
 
     $n = $p * $q;
     $totient = ($p - 1) * ($q - 1);
-    dd($totient);
     $e = cari_e($totient);
     $d = cari_d($e, $totient);
 
