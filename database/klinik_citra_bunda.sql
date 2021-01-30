@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 28, 2021 at 03:09 AM
+-- Generation Time: Jan 30, 2021 at 12:20 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.5
 
@@ -18,10 +18,10 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `skripsi_enkripsi`
+-- Database: `klinik_citra_bunda`
 --
-CREATE DATABASE IF NOT EXISTS `skripsi_enkripsi` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `skripsi_enkripsi`;
+CREATE DATABASE IF NOT EXISTS `klinik_citra_bunda` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `klinik_citra_bunda`;
 
 -- --------------------------------------------------------
 
@@ -44,9 +44,7 @@ CREATE TABLE `dokter` (
 --
 
 INSERT INTO `dokter` (`id`, `nama_dokter`, `nip`, `no_hp`, `foto`, `created_at`, `updated_at`) VALUES
-(2, 'Vanrezky S.Pog', '3047 16024 6042', '3047 16024 6042', 'a92937af3d32cbef1a155328b62d402e.jpeg', '2021-01-17 22:27:02', '2021-01-21 21:58:42'),
-(3, 'Winda S.pok', '16024 10026 3047', '16024 10026 3047', '208d59c92d13494213d8e739ad6b36e7.jpg', '2021-01-17 22:31:33', '2021-01-21 21:58:27'),
-(4, 'Siska Afni', '3047 16024 10026 3047 6042 7726 16024', '3047 10026 16024 7726 10026 3047 16024 6042 7726 3047', '74c3652387c2987fc6e343f95d5af33b.jpg', '2021-01-17 22:34:32', '2021-01-21 22:03:38');
+(4, 'Testing', '3047 16024 10026 3047 6042 7726 16024', '3047 10026 16024 7726 10026 3047 16024 6042 7726 3047', '74c3652387c2987fc6e343f95d5af33b.jpg', '2021-01-17 22:34:32', '2021-01-30 18:10:47');
 
 -- --------------------------------------------------------
 
@@ -99,9 +97,7 @@ CREATE TABLE `perawat_bidan` (
 --
 
 INSERT INTO `perawat_bidan` (`id`, `nama`, `nip`, `pekerjaan`, `no_hp`, `foto`, `created_at`, `updated_at`) VALUES
-(5, 'Widya Amd.Kep', '3047 10026 16024 3047 10026 4641 3047', 'perawat', '7726 15654 10026 10026 10203 15654 10026 10203 10026 7726 3047 7687', '4fe75f8aa2c5ebb6ab47ae94ee989597.jpg', '2021-01-17 22:56:15', '2021-01-21 21:20:13'),
-(6, 'Cantik Jelita', '3047 10026 16024', 'perawat', '7726 15654 7687 15654 7687 15654 3047 10026 16024 15654', 'a0e5a105172236b85f06edadf12480a7.jpg', '2021-01-19 22:11:57', '2021-01-21 21:20:06'),
-(7, 'Rindaman Amd.Kep', '15654 6042 6042 4641 7687 4641 10026 4641 7687 10026 7726 16024 15654 14402 7687', 'perawat', '7726 15654 10026 10026 10203 15654 10026 10203 10026 7726 3047 7687', 'd12531a8575ebfb3d35c2e04bfc10d94.jpeg', '2021-01-21 21:15:33', NULL);
+(6, 'Testing Perawat', '3047 10026 16024', 'perawat', '7726 15654 7687 15654 7687 15654 3047 10026 16024 15654', 'a0e5a105172236b85f06edadf12480a7.jpg', '2021-01-19 22:11:57', '2021-01-30 18:14:02');
 
 -- --------------------------------------------------------
 
@@ -155,9 +151,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `username`, `password`, `nama`, `level`, `foto`, `created_at`, `updated_at`) VALUES
-(5, 'rezky', '$2y$10$DoOlNKLPn1q/8pRQyf1jiu8aV5IcTacg8e.2YECqjx3Cs5sM7Weje', 'Rezky', 'pemilik', 'd5460ae9d49a99d2f5f01dcbdd1bfa25.jpg', '2021-01-17 21:29:31', '2021-01-17 22:43:52'),
-(6, 'afni', '$2y$10$z0V8wuCjEN1ldhNjKzzamuenRtK7pUiSRs/LrHkoZNQPtRaFLzUCG', 'afni', 'admin-klinik', '45648a4962d3cd91b5d33d4cf0dfc5cc.jpg', '2021-01-17 22:44:22', '2021-01-27 13:23:04'),
-(7, 'pemilik', '$2y$10$loJj4n4qvh6jHZy/ZMKBieXGc1kR0gRiCuvFXKaxJ5kdezi8tYyyu', 'Riki', 'pemilik', '3ae52f2c987d5f262372b2512e40316b.jpg', '2021-01-19 21:41:38', '2021-01-19 21:47:44');
+(7, 'pemilik', '$2y$10$loJj4n4qvh6jHZy/ZMKBieXGc1kR0gRiCuvFXKaxJ5kdezi8tYyyu', 'Riki', 'pemilik', '16b292c30eb679317d0c3c261aa3e169.png', '2021-01-19 21:41:38', '2021-01-30 18:02:18');
 
 --
 -- Indexes for dumped tables
@@ -229,18 +223,6 @@ ALTER TABLE `riwayat_pasien`
 --
 ALTER TABLE `user`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `riwayat_pasien`
---
-ALTER TABLE `riwayat_pasien`
-  ADD CONSTRAINT `id_dokter` FOREIGN KEY (`id_dokter`) REFERENCES `dokter` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `id_pasien` FOREIGN KEY (`id_pasien`) REFERENCES `pasien` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `id_perawat_bidan` FOREIGN KEY (`id_pb`) REFERENCES `perawat_bidan` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

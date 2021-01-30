@@ -58,3 +58,4 @@ $route['/'] = 'dasboard/index';
 $route['perawat-bidan'] = 'perawat_bidan/index';
 $route['perawat-bidan/data'] = 'perawat_bidan/data';
 $route['perawat-bidan/data/(:any)'] = 'perawat_bidan/data/$1';
+$route['perawat-bidan/hapus/(:any)'] = 'perawat_bidan/hapus/$1';
