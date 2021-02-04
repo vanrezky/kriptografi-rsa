@@ -4,8 +4,8 @@ function rsa_key()
 {
 
     //Algoritma RSA - Set p dan q = bil. prima, p =/ q
-    $p = 113;
-    $q = 157;
+    $p = 11;
+    $q = 13;
 
     $n = $p * $q;
     $totient = ($p - 1) * ($q - 1);
@@ -130,6 +130,7 @@ function encode_rsa($teks, $e, $n, $s = 1)
             $code = $code + (ord($gbchar[$j]) * bcpow(256, $j));
         }
         // karakter = karakter ^ E (mod N)
+
         $code = bcpowmod($code, $e, $n);
         $isiteks .= $code . " ";
     }

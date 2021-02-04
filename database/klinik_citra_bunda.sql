@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 30, 2021 at 12:20 PM
+-- Generation Time: Feb 04, 2021 at 02:36 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.5
 
@@ -31,7 +31,7 @@ USE `klinik_citra_bunda`;
 
 CREATE TABLE `dokter` (
   `id` int(11) NOT NULL,
-  `nama_dokter` varchar(128) NOT NULL,
+  `nama_dokter` varchar(35) NOT NULL,
   `nip` text DEFAULT NULL,
   `no_hp` text DEFAULT NULL,
   `foto` tinytext NOT NULL,
@@ -44,7 +44,7 @@ CREATE TABLE `dokter` (
 --
 
 INSERT INTO `dokter` (`id`, `nama_dokter`, `nip`, `no_hp`, `foto`, `created_at`, `updated_at`) VALUES
-(4, 'Testing', '3047 16024 10026 3047 6042 7726 16024', '3047 10026 16024 7726 10026 3047 16024 6042 7726 3047', '74c3652387c2987fc6e343f95d5af33b.jpg', '2021-01-17 22:34:32', '2021-01-30 18:10:47');
+(4, 'Testing', '36 116 41 36 73 126 116', '36 41 116 126 41 36 116 73 126 36', '74c3652387c2987fc6e343f95d5af33b.jpg', '2021-01-17 22:34:32', '2021-02-03 21:23:34');
 
 -- --------------------------------------------------------
 
@@ -54,8 +54,8 @@ INSERT INTO `dokter` (`id`, `nama_dokter`, `nip`, `no_hp`, `foto`, `created_at`,
 
 CREATE TABLE `pasien` (
   `id` int(11) NOT NULL,
-  `kode_pasien` varchar(128) NOT NULL,
-  `nama_pasien` varchar(128) NOT NULL,
+  `kode_pasien` varchar(11) NOT NULL,
+  `nama_pasien` varchar(35) NOT NULL,
   `nik` tinytext NOT NULL,
   `kategori` enum('bayi','anak-anak','remaja','dewasa','lanjut usia') DEFAULT NULL,
   `jenis_kelamin` enum('laki-laki','perempuan') DEFAULT NULL,
@@ -71,9 +71,8 @@ CREATE TABLE `pasien` (
 --
 
 INSERT INTO `pasien` (`id`, `kode_pasien`, `nama_pasien`, `nik`, `kategori`, `jenis_kelamin`, `umur`, `alamat`, `no_hp`, `created_at`, `updated_at`) VALUES
-(1, 'P-0001', 'Vanrezky Sadewa', '6042 14402 3047 10026 16024 15654 10026 6042 3047 16024 15654', 'dewasa', 'laki-laki', 23, 'Jl lintas timur desa kemang', '3047 10026 16024 10026 4641 3047 10026 14402 3047 10026 16024 10026 3047 16024', '2021-01-21 23:35:35', '0000-00-00 00:00:00'),
-(2, 'P-0001', 'Iky', '3047 10026 16024', 'bayi', 'laki-laki', 2, 'Jln Lintas Sumatera Km 10 Kota Pekanbaru', '7726 15654 3047 10026', '2021-01-21 23:46:16', '0000-00-00 00:00:00'),
-(3, 'P-0003', 'asdasdasd', '3047 10026 16024 3047 10026 16024 3047 10026 16024', 'anak-anak', 'laki-laki', 23, 'ddfsdfasdasdadasdasd', '15654 16024 14402 10026 16024 14402 10026 16024 14402 10026 16024 14402', '2021-01-23 20:24:47', '0000-00-00 00:00:00');
+(1, 'P-0001', 'test2', '73 13 36 41 116 56 41 73 36 116 56', 'dewasa', 'laki-laki', 23, 'Jl lintas timur desa kemang', '36 41 116 41 92 36 41 13 36 41 116 41 36 116', '2021-01-21 23:35:35', '2021-02-03 22:10:48'),
+(3, 'P-0003', 'test1', '36 41 36 116 41 36 116 41 116 36', 'anak-anak', 'laki-laki', 23, 'ddfsdfasdasdadasdasd', '56 116 13 41 116 13 41 116 13 41 116 13', '2021-01-23 20:24:47', '2021-02-03 22:10:38');
 
 -- --------------------------------------------------------
 
@@ -83,7 +82,7 @@ INSERT INTO `pasien` (`id`, `kode_pasien`, `nama_pasien`, `nik`, `kategori`, `je
 
 CREATE TABLE `perawat_bidan` (
   `id` int(11) NOT NULL,
-  `nama` varchar(128) NOT NULL,
+  `nama` varchar(35) NOT NULL,
   `nip` text DEFAULT NULL,
   `pekerjaan` enum('perawat','bidan') DEFAULT NULL,
   `no_hp` text DEFAULT NULL,
@@ -97,7 +96,7 @@ CREATE TABLE `perawat_bidan` (
 --
 
 INSERT INTO `perawat_bidan` (`id`, `nama`, `nip`, `pekerjaan`, `no_hp`, `foto`, `created_at`, `updated_at`) VALUES
-(6, 'Testing Perawat', '3047 10026 16024', 'perawat', '7726 15654 7687 15654 7687 15654 3047 10026 16024 15654', 'a0e5a105172236b85f06edadf12480a7.jpg', '2021-01-19 22:11:57', '2021-01-30 18:14:02');
+(6, 'Testing Perawat', '36 41 116', 'perawat', '126 56 55 56 55 56 36 41 116 56', 'a0e5a105172236b85f06edadf12480a7.jpg', '2021-01-19 22:11:57', '2021-02-03 21:23:50');
 
 -- --------------------------------------------------------
 
@@ -126,8 +125,8 @@ CREATE TABLE `riwayat_pasien` (
 --
 
 INSERT INTO `riwayat_pasien` (`id`, `id_pasien`, `tgl_berobat`, `gejala`, `tb`, `bb`, `td`, `kat_penyakit`, `obat`, `id_dokter`, `id_pb`, `created_at`, `updated_at`) VALUES
-(6, 3, '2021-01-17', '6413 4358 14937 11189 6345 6201 14937 12763 7158 4358 4180 4358 13629 6201 17339 11189 1494 10629 15351 8480 6201 6345 12763 15934 14722 10629 2479 8799 4358 6345', 170, 55, 60, 'TM', '4180 4358 15934 4358 14722 12763 6345 4358 2479 2341 7158', 3, NULL, '2021-02-25 10:01:35', '2021-01-26 23:10:55'),
-(7, 1, '2021-01-26', '4305 12763 15934 11189 4358 15351 8480', 170, 72, 80, 'TM', '4305 4358 7158 4358 2479 6201 2479 11189 15351 8480 8480 10629', 4, NULL, '2021-01-26 23:10:36', NULL);
+(6, 3, '2021-01-17', '8 59 68 118 129 98 68 62 4 59 18 59 99 98 91 118 100 39 33 38 98 129 62 49 80 39 21 32 59 129', 170, 55, 60, 'TM', '18 59 49 59 80 62 129 59 21 45 4', NULL, NULL, '2021-02-25 10:01:35', '2021-02-03 21:19:26'),
+(7, 1, '2021-01-26', '77 62 49 118 59 33 38', 170, 72, 80, 'TM', '77 59 4 59 21 98 21 118 33 38 38 39', 4, NULL, '2021-01-26 23:10:36', '2021-02-03 21:19:08');
 
 -- --------------------------------------------------------
 
