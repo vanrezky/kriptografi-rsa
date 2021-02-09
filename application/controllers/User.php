@@ -114,7 +114,7 @@ class User extends MY_Controller
 					}
 				} else {
 					$data['username'] = $this->input->post('username', true);
-					$data['password'] = $this->input->post('pass1');
+					$data['password'] = password_hash($this->input->post('pass1'), PASSWORD_DEFAULT);
 					$data['created_at'] = current_timestamp();
 				}
 
