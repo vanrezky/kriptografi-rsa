@@ -61,8 +61,14 @@
                 <?php }; ?>
                 <li class="nav-item">
                     <a href="<?= base_url('laporan'); ?>" class="nav-link">
-                        <i class="nav-icon fas fa-lock"></i>
+                        <i class="nav-icon fas fa-file-pdf"></i>
                         <p>Laporan</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="<?= base_url('rsa'); ?>" class="nav-link">
+                        <i class="nav-icon fas fa-lock"></i>
+                        <p>Implementasi RSA</p>
                     </a>
                 </li>
                 <li class="nav-item">
