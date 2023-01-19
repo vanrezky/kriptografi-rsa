@@ -22,12 +22,20 @@ class Dashboard extends MY_Controller
 		// $bulan_array = [];
 		// foreach ($this->auth->getBulan() as $key => $value) {
 		// }
-		$data = [
-			'title' => 'Dashboard',
-			'sekilas' => $this->auth->getSekilas(),
-			// 'bulan' => $bulan_array,
+
+		$sekilas = $this->auth->getSekilas();
+
+		$grafik = [
+			'labels' => ['Riwayat', 'Pasien', 'Dokter', 'Perawat'],
+			'series' => [$sekilas['riwayat'], $sekilas['pasien'], $sekilas['dokter'], $sekilas['perawat_bidan']]
 		];
 
+		$data = [
+			'title' => 'Dashboard',
+			'sekilas' => $sekilas,
+			'grafik' => $grafik,
+			// 'bulan' => $bulan_array,
+		];
 
 		$this->render('v_dashboard_index', $data);
 

@@ -52,7 +52,7 @@ class Dokter extends MY_Controller
 
 		// start form validasi
 		if ($id === false) {
-			$this->form_validation->set_rules('nip', 'NIP', 'trim|required|numeric|is_unique[dokter.nip]', [
+			$this->form_validation->set_rules('nip', 'NIP', 'trim|required|is_unique[dokter.nip]', [
 				'required' => 'NIP tidak Boleh Kosong!',
 				'numeric' => 'NIP harus berupa angka!',
 				'is_unique' => 'NIP sudah terdaftar!'
@@ -62,7 +62,7 @@ class Dokter extends MY_Controller
 		$this->form_validation->set_rules('nama_dokter', 'Nama dokter', 'trim|required', [
 			'required' => 'Nama dokter tidak Boleh Kosong!'
 		]);
-		$this->form_validation->set_rules('no_hp', 'Nomor Handphone', 'trim|required|numeric', [
+		$this->form_validation->set_rules('no_hp', 'Nomor Handphone', 'trim|numeric', [
 			'required' => 'Nomor Handphone tidak Boleh Kosong!',
 			'numeric' => 'Nomor Handphone harus berupa angka!'
 		]);

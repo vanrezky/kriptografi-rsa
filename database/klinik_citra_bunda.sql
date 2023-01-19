@@ -20,8 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `klinik_citra_bunda`
 --
-CREATE DATABASE IF NOT EXISTS `klinik_citra_bunda` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `klinik_citra_bunda`;
 
 -- --------------------------------------------------------
 

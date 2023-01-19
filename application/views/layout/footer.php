@@ -11,7 +11,7 @@
         </script>
         </div>
         <footer class="main-footer">
-            Klinik Citra Bunda
+            Puskesmas Berseri
         </footer>
         </div>
 

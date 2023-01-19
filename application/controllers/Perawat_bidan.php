@@ -56,9 +56,8 @@ class Perawat_bidan extends MY_Controller
 
 		// start form validasi
 		if ($id === false) {
-			$this->form_validation->set_rules('nip', 'NIP', 'trim|required|numeric|is_unique[perawat_bidan.nip]', [
+			$this->form_validation->set_rules('nip', 'NIP', 'trim|required|is_unique[perawat_bidan.nip]', [
 				'required' => 'NIP tidak Boleh Kosong!',
-				'numeric' => 'NIP harus berupa angka!',
 				'is_unique' => 'NIP sudah terdaftar!'
 			]);
 		}
@@ -66,8 +65,8 @@ class Perawat_bidan extends MY_Controller
 		$this->form_validation->set_rules('nama', 'Nama', 'trim|required', [
 			'required' => 'Nama tidak Boleh Kosong!'
 		]);
-		$this->form_validation->set_rules('no_hp', 'Nomor Handphone', 'trim|required|numeric', [
-			'required' => 'Nomor Handphone tidak Boleh Kosong!',
+		$this->form_validation->set_rules('no_hp', 'Nomor Handphone', 'trim|numeric', [
+			// 'required' => 'Nomor Handphone tidak Boleh Kosong!',
 			'numeric' => 'Nomor Handphone harus berupa angka!'
 		]);
 		$this->form_validation->set_rules('pekerjaan', 'Pekerjaan', 'trim|required', [
